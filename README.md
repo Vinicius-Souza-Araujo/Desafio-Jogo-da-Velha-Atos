@@ -1,6 +1,6 @@
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 
-# Desafio-Jogo-da-Velha-Atos
+# Desafio Jogo da Velha Atos
 
 Desenvolva um jogo da velha utilizando matrizes em C#. Faça com que cada jogador insira a sua jogada em uma interface amigavel.
 
