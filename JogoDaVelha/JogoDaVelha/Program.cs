@@ -67,15 +67,24 @@ namespace JogoDaVelha
 
         }
 
-        public static bool veriricarOcupacaoPosicao(int linha, int coluna, char[,] matriz)
+        public static bool validarPosicao(int linha, int coluna, char[,] matriz)
         {
-            while (true) {
+             if(linha > 2 || linha < 0 || coluna > 2 || coluna < 0)
+            {
+                return false;
+
+
+            }
+            else
+            {
                 if (matriz[linha, coluna] == ' ' || matriz[linha, coluna] == '_')
                 {
                     return true;
                 }
                 return false;
             }
+                
+            
             
             
         }
@@ -216,16 +225,17 @@ namespace JogoDaVelha
                     int coluna = int.Parse(Console.ReadLine());
                     
 
-                    if (veriricarOcupacaoPosicao(linha, coluna, matriz))
+                    if (validarPosicao(linha, coluna, matriz))
                     {
                         matriz[linha, coluna] = 'X';
                         break;
                     }
                     else
                     {
-                        Console.Clear();
+                        
                         Console.WriteLine();
-                        Console.WriteLine(" Posição ocupada, tente outra...");
+                        Console.WriteLine(" Erro, tente novamente...");
+                        Thread.Sleep(1000);
                     }
                 }
 
@@ -267,7 +277,7 @@ namespace JogoDaVelha
                     int coluna = int.Parse(Console.ReadLine());
                     
 
-                    if (veriricarOcupacaoPosicao(linha, coluna, matriz))
+                    if (validarPosicao(linha, coluna, matriz))
                     {
                         matriz[linha, coluna] = 'O';
                         break;
@@ -276,7 +286,8 @@ namespace JogoDaVelha
                     {
                         Console.Clear();
                         Console.WriteLine();
-                        Console.WriteLine(" Posição ocupada, tente outra...");
+                        Console.WriteLine(" Erro, tente novamente...");
+                        Thread.Sleep(1000);
                     }
                 }
 
@@ -308,6 +319,159 @@ namespace JogoDaVelha
 
         }
 
+        public static void jogadaMaquina(char[,] matriz, int cont)
+        {
+            if (cont == 1){ matriz[1, 1] = 'X'; }
+
+            if(cont == 2)
+            {
+                if (matriz[0, 0] == 'O'){ matriz[2, 2] = 'X'; }
+                else if (matriz[2, 2] == 'O') { matriz[0, 0] = 'X'; }
+                else if (matriz[0, 2] == 'O') { matriz[2, 0] = 'X'; }
+                else if (matriz[2, 0] == 'O') { matriz[0, 2] = 'X'; }
+                else if (matriz[1, 0] == 'O') { matriz[1, 2] = 'X'; }
+                else if (matriz[1, 2] == 'O') { matriz[1, 0] = 'X'; }
+                else if (matriz[0, 1] == 'O') { matriz[2, 1] = 'X'; }
+                else if (matriz[2, 1] == 'O') { matriz[0, 1] = 'X'; }
+            }
+
+
+            if(cont >= 3)
+            {
+                
+                if ((matriz[0,0] == 'O' && matriz[0,2] == 'O') && (matriz[0, 1] != 'O') && (matriz[0, 1] != 'X')) { matriz[0, 1] = 'X'; }
+                else if ((matriz[2, 0] == 'O' && matriz[2, 2] == 'O') && (matriz[2, 1] != 'O') && (matriz[2, 1] != 'X')) { matriz[2, 1] = 'X'; }
+                else if ((matriz[0, 0] == 'O' && matriz[2, 0] == 'O') && (matriz[1, 0] != 'O') && (matriz[1, 0] != 'X')){ matriz[1, 0] = 'X'; }
+                else if ((matriz[0, 2] == 'O' && matriz[2, 2] == 'O') && (matriz[1, 2] != 'O') && (matriz[1, 2] != 'X')) { matriz[1, 2] = 'X'; }
+
+                else if ((matriz[0, 2] == 'O' && matriz[1, 2] == 'O') && (matriz[2,2] != 'O') && (matriz[2, 2] != 'X')) { matriz[2, 2] = 'X'; }
+                else if((matriz[1, 2] == 'O' && matriz[2, 2] == 'O') && (matriz[0,2] != 'O') && (matriz[0, 2] != 'X')) { matriz[0, 2] = 'X'; }
+
+                else if ((matriz[0, 0] == 'O' && matriz[1, 0] == 'O') && (matriz[2, 0] != 'O') && (matriz[2, 0] != 'X')) { matriz[2, 0] = 'X'; }
+                else if ((matriz[1, 0] == 'O' && matriz[2, 0] == 'O') && (matriz[0, 0] != 'O') && (matriz[0, 0] != 'X')) { matriz[0, 0] = 'X'; }
+
+                else if ((matriz[0, 0] == 'O' && matriz[0, 1] == 'O') && (matriz[0, 2] != 'O') && (matriz[0, 2] != 'X')) { matriz[0, 2] = 'X'; }
+                else if ((matriz[0, 1] == 'O' && matriz[0, 2] == 'O') && (matriz[0, 0] != 'O') && (matriz[0, 0] != 'X')) { matriz[0, 0] = 'X'; }
+
+                else if ((matriz[2, 0] == 'O' && matriz[2, 1] == 'O') && (matriz[2, 2] != 'O') && (matriz[2, 2] != 'X')) { matriz[2, 2] = 'X'; }
+                else if ((matriz[2, 1] == 'O' && matriz[2, 2] == 'O') && (matriz[2, 0] != 'O') && (matriz[2, 0] != 'X')) { matriz[2, 0] = 'X'; }
+
+                else
+                {
+                    bool pararForExterno = false;
+                    for (int linha = 0; linha < matriz.GetLength(0); linha++)
+                    {
+
+                        for (int coluna = 0; coluna < matriz.GetLength(1); coluna++)
+                        {
+                            if ( matriz[linha, coluna] == ' ' || matriz[linha, coluna] == '_') {
+                                matriz[linha, coluna] = 'X';
+                                pararForExterno = true;
+                                break;
+                            }
+
+
+                        }
+
+                        if (pararForExterno) { break; }
+                    }
+                }
+            }
+        }   
+
+        public static void playGameCpu(string j1, char[,] matriz)
+        {
+            popularComVazio(matriz);
+            bool boolVitoria;
+            char xOuBolinha;
+            int cont = 0;
+            while (true) {
+                cont++;
+
+                Console.WriteLine();
+                Console.WriteLine(" A máquina está jogando...");
+                Thread.Sleep(2000);
+                Console.Clear();
+                jogadaMaquina(matriz, cont);
+
+                xOuBolinha = 'X';
+                if (verificarVitoria(matriz, xOuBolinha))
+                {
+                    Console.Clear();
+                    Console.WriteLine();
+                    mostrarTabuleiro(matriz);
+                    Console.WriteLine();
+                    Console.WriteLine(" VOCÊ PERDEU PARA A MÁQUINA :( ");
+                    break;
+                }
+                else
+                {
+                    boolVitoria = false;
+                }
+
+                if (verificarEmpate(matriz, boolVitoria))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(" EMPATE!!!!!! ");
+                    break;
+                }
+
+
+                while (true)
+                {
+
+                    mostrarTabuleiro(matriz);
+                    Console.WriteLine();
+                    Console.WriteLine(" " + j1 + " digite a linha e a coluna: ");
+                    Console.Write(" -> ");
+                    int linha = int.Parse(Console.ReadLine());
+
+                    Console.Write(" -> ");
+                    int coluna = int.Parse(Console.ReadLine());
+
+
+                    if (validarPosicao(linha, coluna, matriz))
+                    {
+                        matriz[linha, coluna] = 'O';
+                        break;
+                    }
+                    else
+                    {
+
+                        Console.WriteLine();
+                        Console.WriteLine(" Erro, tente novamente...");
+                        Thread.Sleep(1000);
+                    }
+                }
+
+
+                xOuBolinha = 'O';
+                if (verificarVitoria(matriz, xOuBolinha))
+                {
+                    Console.Clear();
+                    Console.WriteLine();
+                    mostrarTabuleiro(matriz);
+                    Console.WriteLine();
+                    Console.WriteLine(" PARABENS JOGADOR " + j1 + " VOCÊ GANHOU!!!!");
+                    break;
+                }
+                else
+                {
+                    boolVitoria = false;
+                }
+
+                if (verificarEmpate(matriz, boolVitoria))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(" EMPATE!!!!!! ");
+                    break;
+                }
+
+
+            }
+
+        }
+
         static void Main(string[] args)
         {
             char[,] tabuleiro = new char[3, 3];
@@ -324,7 +488,7 @@ namespace JogoDaVelha
                 Console.WriteLine("");
 
                 Console.WriteLine(" 1 - J1 VS J2");
-                Console.WriteLine(" 2 - J1 VS CPU (Em breve...) ");
+                Console.WriteLine(" 2 - J1 VS CPU");
                 Console.WriteLine(" 3 - Sair");
                 Console.WriteLine("");
 
@@ -367,8 +531,31 @@ namespace JogoDaVelha
                         }
                         
                         break;
+
                     case '2':
                         Console.Clear();
+                        while (true)
+                        {
+                            Console.WriteLine(" Jogador 1, você jogará com o (O), digite seu nickname: ");
+                            Console.Write(" -> ");
+                            j1 = Console.ReadLine();
+                            Console.Clear();
+
+                            playGameCpu(j1, tabuleiro);
+
+                            Console.WriteLine();
+                            Console.WriteLine(" Digite (1) para reiniciar ou qualquer caracter para sair: ");
+                            Console.WriteLine("");
+                            Console.Write(" -> ");
+                            opcaoReniciar = char.Parse(Console.ReadLine());
+
+                            if (opcaoReniciar != '1')
+                            {
+                                Console.Clear();
+                                break;
+                            }
+
+                        }
                         break;
 
                     case '3':
